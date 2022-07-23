@@ -1,0 +1,23 @@
+{
+  "questions": [{ "question": "alias of project", "id": "alias", "default": "asepm:name" }],
+  "filesToReplace": [
+    { "file": "src/constants/index.ts", "replace": ["alias"] },
+    {
+      "file": "README.md",
+      "replace": ["alias", "asepm:description", "asepm:author.name", "asepm:author.email", "asepm:author.url"]
+    },
+    {
+      "file": "package.json",
+      "replace": [
+        "alias",
+        "asepm:name",
+        "asepm:description",
+        "asepm:author.name",
+        "asepm:author.email",
+        "asepm:author.url",
+        "asepm:github",
+        "asepm:license"
+      ]
+    }
+  ]
+}

@@ -4,7 +4,7 @@
     { "file": "src/constants/index.ts", "replace": ["alias"] },
     {
       "file": "README.md",
-      "replace": ["alias", "description", "author.name", "author.email", "author.url"]
+      "replace": ["alias", "description", "author:name", "author:email", "author:url"]
     },
     {
       "file": "package.json",

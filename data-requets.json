@@ -4,19 +4,19 @@
     { "file": "src/constants/index.ts", "replace": ["alias"] },
     {
       "file": "README.md",
-      "replace": ["alias", "asepm:description", "asepm:author.name", "asepm:author.email", "asepm:author.url"]
+      "replace": ["alias", "description", "author.name", "author.email", "author.url"]
     },
     {
       "file": "package.json",
       "replace": [
         "alias",
-        "asepm:name",
-        "asepm:description",
-        "asepm:author.name",
-        "asepm:author.email",
-        "asepm:author.url",
-        "asepm:github",
-        "asepm:license"
+        "name",
+        "description",
+        "author:name",
+        "author:email",
+        "author:url",
+        "github",
+        "license"
       ]
     }
   ]

@@ -6,5 +6,5 @@
 
 ## [<author.name>]:
 
-- [<author.email>]
-- [[<author.url>]]([<author.url>])
+- [<author:email>]
+- [[<author:url>]]([<author:url>])

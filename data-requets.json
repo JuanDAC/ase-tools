@@ -1,5 +1,5 @@
 {
-  "questions": [{ "question": "alias of project", "id": "alias", "default": "asepm:name" }],
+  "questions": [{ "question": "alias of project", "id": "alias", "default": "name" }],
   "filesToReplace": [
     { "file": "src/constants/index.ts", "replace": ["alias"] },
     {

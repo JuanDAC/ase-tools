@@ -11,9 +11,9 @@
     "lint": "eslint -f unix \"src/**/*.{ts,tsx}\""
   },
   "author": {
-    "name": "[<author.name>]",
-    "email": "[<author.email>]",
-    "url": "[<author.url>]"
+    "name": "[<author:name>]",
+    "email": "[<author:email>]",
+    "url": "[<author:url>]"
   },
   "repository": {
     "type": "git",

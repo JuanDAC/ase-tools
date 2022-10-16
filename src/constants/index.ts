@@ -1,2 +1,1 @@
-
-export const APP_NAME:string = '[<alias>]';
+export const APP_NAME: string = '[<alias>]';

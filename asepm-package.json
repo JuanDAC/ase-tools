@@ -1,0 +1,14 @@
+{
+  "information": {
+    "alias": "ase-color",
+    "name": "ase-color",
+    "description": "ase color is the script that contains a super set of caractericstics for handler color in aseprite",
+    "license": "GNU General Public License v3.0",
+    "author:name": "JuanDAC",
+    "author:email": "juanavila12.0308@gmail.com",
+    "author:url": "https://github.com/JuanDAC",
+    "github": "https://github.com/JuanDAC"
+  },
+  "template": "juandac/ase-template-script",
+  "dependencies": ["juandac/ase-deep-copy", "juandac/ase-ui"]
+}

@@ -1,3 +1,3 @@
-import { APP_NAME } from './constants';
+import { Color } from './views/color';
 
-console.log(`${APP_NAME} say "Hello World!"`);
+new Color();

@@ -33,9 +33,9 @@ export class Color extends AseView {
         Check({
           id: 'COLOR_armonias',
           text: 'Armonías cromáticas',
-          selected: this.state.obtainShare('COLOR_harmonies', 'visible'),
+          selected: this.state.obtainShare({ group: 'COLOR_harmonies', key: 'visible' }),
           onclick: () => {
-            this.state.updateShare('COLOR_harmonies', 'visible', (visible) => !visible);
+            this.state.updateShare({ group: 'COLOR_harmonies', key: 'visible', update: (visible) => !visible });
           },
         }),
         Newrow(),

@@ -9,7 +9,7 @@ export class Header extends AseComponent {
   }
 
   initialState({ state }: AseComponentMethodsProps): void {
-    state.initial('ASEUI_languages', 'visible', false);
+    state.initial({ id: 'ASEUI_languages', key: 'visible', initialValue: false });
   }
 
   render({ state, window }: AseComponentMethodsProps): ComponentFormart[] {
@@ -22,7 +22,7 @@ export class Header extends AseComponent {
         Combobox({
           id: 'ASEUI_languages',
           focus: true,
-          visible: state.obtain('ASEUI_languages', 'visible'),
+          visible: state.obtain({ id: 'ASEUI_languages', key: 'visible' }),
           option: 'es-ES',
           options: ['es-ES', 'en-US'],
           onchange: () => {
@@ -34,7 +34,7 @@ export class Header extends AseComponent {
           text: 'language',
           selected: false,
           onclick: () => {
-            state.update('ASEUI_languages', 'visible', (visible) => !visible);
+            state.update({ id: 'ASEUI_languages', key: 'visible', update: (visible) => !visible });
           },
         }),
         Button({

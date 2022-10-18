@@ -8,19 +8,19 @@ export class Harmonies extends AseComponent {
     super();
   }
   initialState({ state }: AseComponentMethodsProps): void {
-    state.initialShare(
-      'COLOR_harmonies',
-      [
+    state.initialShare({
+      group: 'COLOR_harmonies',
+      ids: [
         'HARMONIES_picker_color',
         'HARMONIES_select_backgound',
         'HARMONIES_select_foregound',
         'HARMONIES_select_harmony',
         'HARMONIES_palette',
       ],
-      'visible',
-      false,
-      false
-    );
+      key: 'visible',
+      initialValue: false,
+      modify: false,
+    });
   }
 
   render({ state, window }: AseComponentMethodsProps): ComponentFormart[] {
@@ -28,7 +28,7 @@ export class Harmonies extends AseComponent {
       children: [
         Color({
           id: 'HARMONIES_picker_color',
-          visible: state.obtainShare('COLOR_harmonies', 'visible'),
+          visible: state.obtainShare({ group: 'COLOR_harmonies', key: 'visible' }),
           onchange: () => {
             print('Generate the color palette new color');
           },
@@ -36,16 +36,16 @@ export class Harmonies extends AseComponent {
         Button({
           id: 'HARMONIES_select_backgound',
           text: 'primario',
-          visible: state.obtainShare('COLOR_harmonies', 'visible'),
+          visible: state.obtainShare({ group: 'COLOR_harmonies', key: 'visible' }),
         }),
         Button({
           id: 'HARMONIES_select_foregound',
           text: 'segundario',
-          visible: state.obtainShare('COLOR_harmonies', 'visible'),
+          visible: state.obtainShare({ group: 'COLOR_harmonies', key: 'visible' }),
         }),
         Combobox({
           id: 'HARMONIES_select_harmony',
-          visible: state.obtainShare('COLOR_harmonies', 'visible'),
+          visible: state.obtainShare({ group: 'COLOR_harmonies', key: 'visible' }),
           options: [
             'Analogos',
             'Complementarios',
@@ -65,7 +65,7 @@ export class Harmonies extends AseComponent {
         }),
         Shades({
           id: 'HARMONIES_palette',
-          visible: state.obtainShare('COLOR_harmonies', 'visible'),
+          visible: state.obtainShare({ group: 'COLOR_harmonies', key: 'visible' }),
           colors: [],
         }),
       ],

@@ -1,7 +1,8 @@
-import { Button, Color, Combobox, Component, Shades } from 'juandac/ase-ui/src/AseUI/components';
+import { Combobox, Component, Shades } from 'juandac/ase-ui/src/AseUI/components';
 import { ComponentFormart } from 'juandac/ase-ui/src/AseUI/components/interface';
 import { AseComponent } from 'juandac/ase-ui/src/AseUI/window';
 import { AseComponentMethodsProps } from 'juandac/ase-ui/src/AseUI/window/interface';
+import { PickerColors } from './PickerColors';
 
 export class Harmonies extends AseComponent {
   constructor() {
@@ -20,20 +21,18 @@ export class Harmonies extends AseComponent {
     return Component({
       visible: state.obtain({ id: 'COLOR_harmonies', key: 'visible' }),
       children: [
-        Color({
-          id: 'HARMONIES_picker_color',
-          onchange: (value: Color) => {
-            print('Generate the color was selected is: ');
-            print(value);
+        PickerColors({
+          id: 'HARMONIES_picker',
+          state,
+          onChangeColor: (color) => {
+            print(color);
           },
-        }),
-        Button({
-          id: 'HARMONIES_select_backgound',
-          text: 'primario',
-        }),
-        Button({
-          id: 'HARMONIES_select_foregound',
-          text: 'segundario',
+          onPrimary: () => {
+            print('onPrimary');
+          },
+          onSecondary: () => {
+            print('onSecondary');
+          },
         }),
         Combobox({
           id: 'HARMONIES_select_harmony',

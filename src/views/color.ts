@@ -1,7 +1,10 @@
 import { App, Check, Newrow, Separator } from 'juandac/ase-ui/src/AseUI/components';
 import { AseComponent, AseView } from 'juandac/ase-ui/src/AseUI/window';
-import { Harmonies } from '../compoenets/harmonies';
-import { Header } from '../compoenets/header';
+import { Contrast } from '../compoenets/Contrast';
+import { Gradients } from '../compoenets/Gradients';
+import { Harmonies } from '../compoenets/Harmonies';
+import { Header } from '../compoenets/Header';
+import { Mixtures } from '../compoenets/Mixtures';
 
 export class Color extends AseView {
   constructor() {
@@ -12,20 +15,29 @@ export class Color extends AseView {
     return {
       Header: new Header(),
       Harmonies: new Harmonies(),
+      Mixtures: new Mixtures(),
+      Gradients: new Gradients(),
+      Contrast: new Contrast(),
     };
   }
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   initialState() {}
 
-  run() {
-    this.window.template = App({
+  render() {
+    const Header = this.component('Header');
+    const Harmonies = this.component('Harmonies');
+    const Mixtures = this.component('Mixtures');
+    const Gradients = this.component('Gradients');
+    const Contrast = this.component('Contrast');
+
+    return App({
       title: 'Color',
       onclose: () => {
         return;
       },
       children: [
-        ...this.component('Header'),
+        Header,
         Separator({
           id: 'COLOR_separator',
           text: 'color',
@@ -33,28 +45,35 @@ export class Color extends AseView {
         Check({
           id: 'COLOR_armonias',
           text: 'Armonías cromáticas',
-          selected: this.state.obtainShare({ group: 'COLOR_harmonies', key: 'visible' }),
-          onclick: () => {
-            this.state.updateShare({ group: 'COLOR_harmonies', key: 'visible', update: (visible) => !visible });
-          },
+          selected: this.state.obtain({ id: 'COLOR_harmonies', key: 'visible' }),
+          onclick: () => this.state.update({ id: 'COLOR_harmonies', key: 'visible', update: (visible) => !visible }),
         }),
         Newrow(),
-        ...this.component('Harmonies'),
+        Harmonies,
         Check({
           id: 'COLOR_mezclas',
           text: 'Mezclador de colores',
+          selected: this.state.obtain({ id: 'COLOR_mixtures', key: 'visible' }),
+          onclick: () => this.state.update({ id: 'COLOR_mixtures', key: 'visible', update: (visible) => !visible }),
         }),
         Newrow(),
+        Mixtures,
         Check({
           id: 'COLOR_degradado',
           text: 'Generar degradado',
+          selected: this.state.obtain({ id: 'COLOR_gradients', key: 'visible' }),
+          onclick: () => this.state.update({ id: 'COLOR_gradients', key: 'visible', update: (visible) => !visible }),
         }),
         Newrow(),
+        Gradients,
         Check({
           id: 'COLOR_contraste',
           text: 'Contraste idoneo',
+          selected: this.state.obtain({ id: 'COLOR_contrasts', key: 'visible' }),
+          onclick: () => this.state.update({ id: 'COLOR_contrasts', key: 'visible', update: (visible) => !visible }),
         }),
         Newrow(),
+        Contrast,
       ],
     });
   }

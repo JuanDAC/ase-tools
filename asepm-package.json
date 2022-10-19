@@ -10,9 +10,5 @@
     "github": "https://github.com/JuanDAC"
   },
   "template": "juandac/ase-template-script",
-  "dependencies": [
-    "juandac/ase-deep-copy",
-    "juandac/ase-ui",
-    "juandac/ase-json"
-  ]
+  "dependencies": ["juandac/ase-deep-copy", "juandac/ase-ui"]
 }

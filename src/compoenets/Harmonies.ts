@@ -8,15 +8,8 @@ export class Harmonies extends AseComponent {
     super();
   }
   initialState({ state }: AseComponentMethodsProps): void {
-    state.initialShare({
-      group: 'COLOR_harmonies',
-      ids: [
-        'HARMONIES_picker_color',
-        'HARMONIES_select_backgound',
-        'HARMONIES_select_foregound',
-        'HARMONIES_select_harmony',
-        'HARMONIES_palette',
-      ],
+    state.initial({
+      id: 'COLOR_harmonies',
       key: 'visible',
       initialValue: false,
       modify: false,
@@ -25,10 +18,10 @@ export class Harmonies extends AseComponent {
 
   render({ state, window }: AseComponentMethodsProps): ComponentFormart[] {
     return Component({
+      visible: state.obtain({ id: 'COLOR_harmonies', key: 'visible' }),
       children: [
         Color({
           id: 'HARMONIES_picker_color',
-          visible: state.obtainShare({ group: 'COLOR_harmonies', key: 'visible' }),
           onchange: (value: Color) => {
             print('Generate the color was selected is: ');
             print(value);
@@ -37,16 +30,13 @@ export class Harmonies extends AseComponent {
         Button({
           id: 'HARMONIES_select_backgound',
           text: 'primario',
-          visible: state.obtainShare({ group: 'COLOR_harmonies', key: 'visible' }),
         }),
         Button({
           id: 'HARMONIES_select_foregound',
           text: 'segundario',
-          visible: state.obtainShare({ group: 'COLOR_harmonies', key: 'visible' }),
         }),
         Combobox({
           id: 'HARMONIES_select_harmony',
-          visible: state.obtainShare({ group: 'COLOR_harmonies', key: 'visible' }),
           options: [
             'Analogos',
             'Complementarios',
@@ -66,7 +56,6 @@ export class Harmonies extends AseComponent {
         }),
         Shades({
           id: 'HARMONIES_palette',
-          visible: state.obtainShare({ group: 'COLOR_harmonies', key: 'visible' }),
           colors: [],
         }),
       ],

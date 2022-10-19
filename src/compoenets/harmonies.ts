@@ -29,8 +29,9 @@ export class Harmonies extends AseComponent {
         Color({
           id: 'HARMONIES_picker_color',
           visible: state.obtainShare({ group: 'COLOR_harmonies', key: 'visible' }),
-          onchange: () => {
-            print('Generate the color palette new color');
+          onchange: (value: Color) => {
+            print('Generate the color was selected is: ');
+            print(value);
           },
         }),
         Button({
@@ -59,8 +60,8 @@ export class Harmonies extends AseComponent {
             'Triada',
             'Triada complementaria',
           ],
-          onchange: () => {
-            print('Generate the color palette new harmony');
+          onchange: (value: string) => {
+            print('Generate the color palette new harmony ' + value);
           },
         }),
         Shades({

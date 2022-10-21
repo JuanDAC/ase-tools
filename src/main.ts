@@ -1,3 +1,3 @@
-import { Color } from './views/color';
+import { Color } from './views/Color';
 
 new Color();

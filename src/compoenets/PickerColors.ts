@@ -1,6 +1,12 @@
 import { Button, Color, Component, FC } from 'juandac/ase-ui/src/AseUI/components';
+import { OnEvent } from 'juandac/ase-ui/src/AseUI/components/interface';
 
-type PickerColorsProps = { id: string; onChangeColor: (color: Color) => void; onPrimary: () => void; onSecondary: () => void };
+type PickerColorsProps = {
+  id: string;
+  onChangeColor: OnEvent<void, Color>;
+  onPrimary: OnEvent;
+  onSecondary: OnEvent;
+};
 
 export const PickerColors: FC<PickerColorsProps> = ({ id, onChangeColor, onPrimary, onSecondary }) =>
   Component({

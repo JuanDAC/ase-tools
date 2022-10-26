@@ -1,16 +1,14 @@
-import { JSON } from 'juandac/ase-json/src/main';
-import { Check, Column, Component, Newrow, Shades, Slider } from 'juandac/ase-ui/src/AseUI/components';
+import { Transforms } from 'juandac/ase-color/src/main';
+import { Button, Check, Column, Component, Newrow, Shades, Slider } from 'juandac/ase-ui/src/AseUI/components';
 import { ComponentFormart } from 'juandac/ase-ui/src/AseUI/components/interface';
 import { AseComponent } from 'juandac/ase-ui/src/AseUI/window';
 import { AseComponentMethodsProps } from 'juandac/ase-ui/src/AseUI/window/interface';
-import { PickerColors } from './PickerColors';
-
-type SwapSection = ({ id }: { id: string }) => void;
-type ContrastProps = {
-  swapSection: SwapSection;
-};
+import { PickerColors } from '../pickerColors/PickerColors';
+import { ContrastProps } from './Mixtures.types';
 
 export class Mixtures extends AseComponent {
+  colors: [Color?, Color?] = [];
+  balance = 50;
   constructor() {
     super();
   }
@@ -22,9 +20,17 @@ export class Mixtures extends AseComponent {
       initialValue: false,
       modify: false,
     });
+
+    state.initial<Color[]>({
+      id: 'MIXTURE_result',
+      key: 'colors',
+      initialValue: [],
+      modify: false,
+    });
   }
 
-  render<T>({ state, swapSection }: AseComponentMethodsProps & ContrastProps & T): ComponentFormart[] {
+  render({ state, window, swapSection }: AseComponentMethodsProps & ContrastProps): ComponentFormart[] {
+    print(this.balance);
     return Component({
       children: [
         Check({
@@ -39,9 +45,9 @@ export class Mixtures extends AseComponent {
           children: [
             PickerColors({
               id: 'MIXTURE_one',
+              color: this.colors[0],
               onChangeColor: (event) => {
-                print('Generate the color was selected is: ');
-                print(event);
+                this.colors[0] = event?.color;
               },
               onPrimary: () => {
                 print('onPrimary');
@@ -52,13 +58,12 @@ export class Mixtures extends AseComponent {
             }),
             PickerColors({
               id: 'MIXTURE_two',
+              color: this.colors[1],
               onChangeColor: (event) => {
-                print('Generate the color was selected is: ');
-                print(JSON.stringify(event));
+                this.colors[1] = event?.color;
               },
               onPrimary: (event) => {
                 print('onPrimary');
-                print(JSON.stringify(event));
               },
               onSecondary: () => {
                 print('onSecondary');
@@ -66,16 +71,33 @@ export class Mixtures extends AseComponent {
             }),
             Shades({
               id: 'MIXTURE_result',
-              colors: [],
+              colors: state.obtain<Color[]>({ id: 'MIXTURE_result', key: 'colors' }),
             }),
             Slider({
               id: 'MIXTURE_balance',
               min: 0,
               max: 100,
+              value: this.balance,
+              onchange: () => (this.balance = window.state['MIXTURE_balance'] as number),
+            }),
+            Button({
+              id: 'MIXTURE_apply',
+              text: 'Aplicar',
+              onclick: () => this.updateColor({ state, window }),
             }),
           ],
         }),
       ],
     });
+  }
+
+  updateColor({ state, window }: AseComponentMethodsProps) {
+    if (this.colors.length === 2) {
+      state.update<[Color]>({
+        id: 'MIXTURE_result',
+        key: 'colors',
+        update: () => [Transforms.blendColors(...(this.colors as [Color, Color]), window.state['MIXTURE_balance'])],
+      });
+    }
   }
 }

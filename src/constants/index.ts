@@ -1,1 +1,1 @@
-export const APP_NAME = 'ase-color';
+export const APP_NAME = 'ase-tools';

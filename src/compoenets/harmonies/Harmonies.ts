@@ -1,11 +1,14 @@
+import { ColorRGB } from 'juandac/ase-color/src/domain/color/types';
+import { ColorModels } from 'juandac/ase-color/src/main';
+import { JSON } from 'juandac/ase-json/src/main';
 import { Check, Column, Combobox, Component, Newrow, Shades } from 'juandac/ase-ui/src/AseUI/components';
 import { ComponentFormart } from 'juandac/ase-ui/src/AseUI/components/interface';
 import { AseComponent } from 'juandac/ase-ui/src/AseUI/window';
 import { AseComponentMethodsProps } from 'juandac/ase-ui/src/AseUI/window/interface';
-import { PickerColors } from './PickerColors';
+import { PickerColors } from '../pickerColors/PickerColors';
 
-type SwapSection = ({ id }: { id: string }) => void;
-type ContrastProps = {
+export type SwapSection = ({ id }: { id: string }) => void;
+export type ContrastProps = {
   swapSection: SwapSection;
 };
 
@@ -22,7 +25,7 @@ export class Harmonies extends AseComponent {
     });
   }
 
-  render<T>({ state, swapSection }: AseComponentMethodsProps & ContrastProps & T): ComponentFormart[] {
+  render({ state, swapSection }: AseComponentMethodsProps & ContrastProps): ComponentFormart[] {
     return Component({
       children: [
         Check({
@@ -38,8 +41,8 @@ export class Harmonies extends AseComponent {
             PickerColors({
               id: 'HARMONIES',
               state,
-              onChangeColor: (color) => {
-                print(color);
+              onChangeColor: (event) => {
+                print(JSON.stringify(ColorModels.RGB2XYZ(event?.color as ColorRGB)));
               },
               onPrimary: () => {
                 print('onPrimary');

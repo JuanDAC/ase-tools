@@ -1,10 +1,10 @@
 import { App, Separator } from 'juandac/ase-ui/src/AseUI/components';
 import { AseComponent, AseView } from 'juandac/ase-ui/src/AseUI/window';
-import { Contrast } from '../compoenets/Contrast';
-import { Gradients } from '../compoenets/Gradients';
-import { Harmonies } from '../compoenets/Harmonies';
-import { Header } from '../compoenets/Header';
-import { Mixtures } from '../compoenets/Mixtures';
+import { Contrast } from '../compoenets/contrast/Contrast';
+import { Gradients } from '../compoenets/gradients/Gradients';
+import { Harmonies } from '../compoenets/harmonies/Harmonies';
+import { Header } from '../compoenets/header/Header';
+import { Mixtures } from '../compoenets/mixtures/Mixtures';
 
 export class Color extends AseView {
   constructor() {
@@ -33,8 +33,7 @@ export class Color extends AseView {
 
     return App({
       title: 'Color',
-      // eslint-disable-next-line @typescript-eslint/no-empty-function
-      onclose: () => {},
+      onclose: () => true,
       children: [
         Header,
         Separator({ id: 'COLOR_separator', text: 'color' }),

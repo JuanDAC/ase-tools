@@ -2,12 +2,8 @@ import { Check, Column, Component, Newrow, Shades, Slider } from 'juandac/ase-ui
 import { ComponentFormart } from 'juandac/ase-ui/src/AseUI/components/interface';
 import { AseComponent } from 'juandac/ase-ui/src/AseUI/window';
 import { AseComponentMethodsProps } from 'juandac/ase-ui/src/AseUI/window/interface';
-import { PickerColors } from './PickerColors';
-
-type SwapSection = ({ id }: { id: string }) => void;
-type ContrastProps = {
-  swapSection: SwapSection;
-};
+import { PickerColors } from '../pickerColors/PickerColors';
+import { ContrastProps } from './Gradients.types';
 
 export class Gradients extends AseComponent {
   constructor() {
@@ -23,7 +19,7 @@ export class Gradients extends AseComponent {
     });
   }
 
-  render<T>({ state, swapSection }: AseComponentMethodsProps & ContrastProps & T): ComponentFormart[] {
+  render({ state, swapSection }: AseComponentMethodsProps & ContrastProps): ComponentFormart[] {
     return Component({
       children: [
         Check({

@@ -4,7 +4,8 @@ import { ComponentFormart } from 'juandac/ase-ui/src/AseUI/components/interface'
 import { AseComponent, AseView } from 'juandac/ase-ui/window';
 import { AseComponentMethodsProps } from 'juandac/ase-ui/src/AseUI/window/interface';
 import { PickerColors } from '../pickerColors/PickerColors';
-import { ContrastProps, OnChangeColorProps } from './Gradients.types';
+import type { OnChangeColorProps } from './Gradients.types';
+
 export class Gradients extends AseComponent {
   color: Color[] = [];
   colors: [Color?, Color?] = [];
@@ -17,7 +18,7 @@ export class Gradients extends AseComponent {
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   initialState(): void {}
 
-  render({ view }: AseComponentMethodsProps & ContrastProps): ComponentFormart[] {
+  render({ view }: AseComponentMethodsProps): ComponentFormart[] {
     return Component({
       children: [
         Check({

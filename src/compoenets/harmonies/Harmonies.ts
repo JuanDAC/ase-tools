@@ -4,7 +4,6 @@ import { ComponentFormart, OnEvent } from 'juandac/ase-ui/src/AseUI/components/i
 import { AseComponent, AseView } from 'juandac/ase-ui/window';
 import { AseComponentMethodsProps } from 'juandac/ase-ui/src/AseUI/window/interface';
 import { PickerColors } from '../pickerColors/PickerColors';
-import { ContrastProps } from './Harmonies.types';
 
 const harmonyHandlers = {
   Analogos: (color: Color) => HarmoniesColor.analogs(color),
@@ -33,7 +32,7 @@ export class Harmonies extends AseComponent {
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   initialState(): void {}
 
-  render({ view }: AseComponentMethodsProps & ContrastProps): ComponentFormart[] {
+  render({ view }: AseComponentMethodsProps): ComponentFormart[] {
     return Component({
       children: [
         Check({

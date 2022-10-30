@@ -4,7 +4,7 @@ import { ComponentFormart } from 'juandac/ase-ui/components';
 import { AseComponent, AseView } from 'juandac/ase-ui/window';
 import { AseComponentMethodsProps } from 'juandac/ase-ui/window';
 import { PickerColors } from '../pickerColors/PickerColors';
-import { ContrastProps, OnChangeColorProps } from './Contrast.types';
+import type { OnChangeColorProps } from './Contrast.types';
 
 export class Contrast extends AseComponent {
   colors: [Color?, Color?] = [];
@@ -13,8 +13,8 @@ export class Contrast extends AseComponent {
   textBest = false;
   colorBlind = false;
   visible = false;
-  check = '√';
-  unCheck = 'ⓧ';
+  static check = '√';
+  static unCheck = 'ⓧ';
 
   constructor() {
     super();
@@ -23,7 +23,7 @@ export class Contrast extends AseComponent {
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   initialState(): void {}
 
-  render({ view }: AseComponentMethodsProps & ContrastProps): ComponentFormart[] {
+  render({ view }: AseComponentMethodsProps): ComponentFormart[] {
     return Component({
       children: [
         Check({
@@ -87,7 +87,7 @@ export class Contrast extends AseComponent {
   }
 
   obtainCheck(value: boolean): string {
-    return value ? this.check : this.unCheck;
+    return value ? Contrast.check : Contrast.unCheck;
   }
 
   onChangeColor({ view, index, value, run = false, update = true }: OnChangeColorProps) {

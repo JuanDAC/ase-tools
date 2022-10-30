@@ -4,7 +4,7 @@ import { ComponentFormart } from 'juandac/ase-ui/src/AseUI/components/interface'
 import { AseComponent, AseView } from 'juandac/ase-ui/window';
 import { AseComponentMethodsProps } from 'juandac/ase-ui/src/AseUI/window/interface';
 import { PickerColors } from '../pickerColors/PickerColors';
-import { ContrastProps, OnChangeColorProps } from './Mixtures.types';
+import type { OnChangeColorProps } from './Mixtures.types';
 
 export class Mixtures extends AseComponent {
   colors: [Color?, Color?] = [];
@@ -19,7 +19,7 @@ export class Mixtures extends AseComponent {
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   initialState(): void {}
 
-  render({ view }: AseComponentMethodsProps & ContrastProps): ComponentFormart[] {
+  render({ view }: AseComponentMethodsProps): ComponentFormart[] {
     return Component({
       children: [
         Check({
@@ -75,7 +75,7 @@ export class Mixtures extends AseComponent {
   onChangeColor({ view, index, value, run = false, update = true }: OnChangeColorProps) {
     const execution = () => {
       this.colors[index] = value;
-      if (update) view.rebuild();
+      if (update) view.update();
     };
     if (run) execution();
     return execution;

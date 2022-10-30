@@ -1,7 +1,7 @@
 import { AseView } from 'juandac/ase-ui/window';
 
 export type SwapSection = ({ id }: { id: string }) => void;
-export type ContrastProps = {
+export type GradientsProps = {
   swapSection: SwapSection;
 };
 

@@ -3,6 +3,7 @@ import { Button, Check, Column, Combobox, Component, Newrow, Shades } from 'juan
 import { ComponentFormart, OnEvent } from 'juandac/ase-ui/components';
 import { AseComponent, AseView, AseComponentMethodsProps } from 'juandac/ase-ui/window';
 import { PickerColors } from '../pickerColors/PickerColors';
+import { HarmoniesProps } from './Harmonies.types';
 
 const harmonyHandlers = {
   Analogos: (color: Color) => HarmoniesColor.analogs(color),
@@ -28,24 +29,28 @@ export class Harmonies extends AseComponent {
     super();
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  initialState(): void {}
+  initialState({ state }: AseComponentMethodsProps): void {
+    state.initial<boolean>({
+      id: 'COLOR_harmonies',
+      key: 'visible',
+      initialValue: false,
+      modify: false,
+    });
+  }
 
-  render({ view }: AseComponentMethodsProps): ComponentFormart[] {
+  render({ state, view, swapSection }: AseComponentMethodsProps & HarmoniesProps): ComponentFormart[] {
+    const visible = state.obtain<boolean>({ id: 'COLOR_harmonies', key: 'visible' });
     return Component({
       children: [
         Check({
           id: 'COLOR_armonias',
           text: 'Armonías cromáticas',
-          selected: this.visible,
-          onclick: (event) => {
-            this.visible = !!event?.value;
-            view.update();
-          },
+          selected: visible,
+          onclick: () => swapSection({ id: 'COLOR_harmonies' }),
         }),
         Newrow(),
         Column({
-          visible: this.visible,
+          visible: visible,
           children: [
             PickerColors({
               color: this.color,

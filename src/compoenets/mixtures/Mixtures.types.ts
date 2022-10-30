@@ -8,6 +8,6 @@ export type OnChangeColorProps = {
   update?: boolean;
   view: AseView;
 };
-export type ContrastProps = {
+export type MixturesProps = {
   swapSection: SwapSection;
 };

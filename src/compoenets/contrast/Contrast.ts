@@ -4,7 +4,7 @@ import { ComponentFormart } from 'juandac/ase-ui/components';
 import { AseComponent, AseView } from 'juandac/ase-ui/window';
 import { AseComponentMethodsProps } from 'juandac/ase-ui/window';
 import { PickerColors } from '../pickerColors/PickerColors';
-import type { OnChangeColorProps } from './Contrast.types';
+import type { ContrastProps, OnChangeColorProps } from './Contrast.types';
 
 export class Contrast extends AseComponent {
   colors: [Color?, Color?] = [];
@@ -20,24 +20,28 @@ export class Contrast extends AseComponent {
     super();
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  initialState(): void {}
+  initialState({ state }: AseComponentMethodsProps): void {
+    state.initial<boolean>({
+      id: 'COLOR_contrasts',
+      key: 'visible',
+      initialValue: false,
+      modify: false,
+    });
+  }
 
-  render({ view }: AseComponentMethodsProps): ComponentFormart[] {
+  render({ state, view, swapSection }: AseComponentMethodsProps & ContrastProps): ComponentFormart[] {
+    const visible = state.obtain<boolean>({ id: 'COLOR_contrasts', key: 'visible' });
     return Component({
       children: [
         Check({
           id: 'COLOR_contraste',
           text: 'Contraste idoneo',
-          selected: this.visible,
-          onclick: (event) => {
-            this.visible = !!event?.value;
-            view.update();
-          },
+          selected: visible,
+          onclick: () => swapSection({ id: 'COLOR_contrasts' }),
         }),
         Newrow(),
         Column({
-          visible: this.visible,
+          visible: visible,
           children: [
             PickerColors({
               id: 'CONTRAST_one',

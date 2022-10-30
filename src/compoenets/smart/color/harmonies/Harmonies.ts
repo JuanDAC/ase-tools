@@ -2,8 +2,8 @@ import { HarmoniesColor } from 'juandac/ase-color/';
 import { Button, Check, Column, Combobox, Component, Newrow, Shades } from 'juandac/ase-ui/components';
 import { ComponentFormart, OnEvent } from 'juandac/ase-ui/components';
 import { AseComponent, AseView, AseComponentMethodsProps } from 'juandac/ase-ui/window';
-import { PickerColors } from '../pickerColors/PickerColors';
-import { HarmoniesProps } from './Harmonies.types';
+import { PickerColors } from '../../../fools/pickerColors/PickerColors';
+import type { HarmoniesProps } from './Harmonies.types';
 
 const harmonyHandlers = {
   Analogos: (color: Color) => HarmoniesColor.analogs(color),

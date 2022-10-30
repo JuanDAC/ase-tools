@@ -3,7 +3,7 @@ import { Check, Component, Label, Newrow, Column, Button } from 'juandac/ase-ui/
 import { ComponentFormart } from 'juandac/ase-ui/components';
 import { AseComponent, AseView } from 'juandac/ase-ui/window';
 import { AseComponentMethodsProps } from 'juandac/ase-ui/window';
-import { PickerColors } from '../pickerColors/PickerColors';
+import { PickerColors } from '../../../fools/pickerColors/PickerColors';
 import type { ContrastProps, OnChangeColorProps } from './Contrast.types';
 
 export class Contrast extends AseComponent {

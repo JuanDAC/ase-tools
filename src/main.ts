@@ -1,6 +1,6 @@
-import { Color } from './views/Color';
+import { MenuView } from './views/MenuView';
 
-new Color();
+new MenuView();
 
 /* print(JSON.stringify(NumTS.zeros([3, 2, 4]))); */
 /* const arrary = [1, 2, 3, 4, 5, 6, 7, 8, 9]; */

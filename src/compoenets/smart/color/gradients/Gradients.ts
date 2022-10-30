@@ -1,68 +1,67 @@
 import { Transforms } from 'juandac/ase-color';
 import { Button, Check, Column, Component, Newrow, Shades, Slider } from 'juandac/ase-ui/components';
-import { ComponentFormart } from 'juandac/ase-ui/components';
+import { ComponentFormart } from 'juandac/ase-ui/src/AseUI/components/interface';
 import { AseComponent, AseView } from 'juandac/ase-ui/window';
-import { AseComponentMethodsProps } from 'juandac/ase-ui/window';
-import { PickerColors } from '../pickerColors/PickerColors';
-import type { MixturesProps, OnChangeColorProps } from './Mixtures.types';
+import { AseComponentMethodsProps } from 'juandac/ase-ui/src/AseUI/window/interface';
+import { PickerColors } from '../../../fools/pickerColors/PickerColors';
+import type { GradientsProps, OnChangeColorProps } from './Gradients.types';
 
-export class Mixtures extends AseComponent {
+export class Gradients extends AseComponent {
+  color: Color[] = [];
   colors: [Color?, Color?] = [];
-  color: [Color?] = [];
-  balance = 50;
+  length = 3;
   visible = false;
-
   constructor() {
     super();
   }
 
   initialState({ state }: AseComponentMethodsProps): void {
     state.initial<boolean>({
-      id: 'COLOR_mixtures',
+      id: 'COLOR_gradients',
       key: 'visible',
       initialValue: false,
       modify: false,
     });
   }
 
-  render({ state, view, swapSection }: AseComponentMethodsProps & MixturesProps): ComponentFormart[] {
-    const visible = state.obtain<boolean>({ id: 'COLOR_mixtures', key: 'visible' });
+  render({ state, view, swapSection }: AseComponentMethodsProps & GradientsProps): ComponentFormart[] {
+    const visible = state.obtain<boolean>({ id: 'COLOR_gradients', key: 'visible' });
     return Component({
       children: [
         Check({
-          id: 'COLOR_mezclas',
-          text: 'Mezclador de colores',
+          id: 'COLOR_degradado',
+          text: 'Generar degradado',
           selected: visible,
-          onclick: () => swapSection({ id: 'COLOR_mixtures' }),
+          onclick: () => swapSection({ id: 'COLOR_gradients' }),
         }),
         Newrow(),
         Column({
           visible: visible,
           children: [
             PickerColors({
-              id: 'MIXTURE_one',
+              id: 'GRADIENT_one',
               color: this.colors[0],
               onChangeColor: (event) => this.onChangeColor({ run: true, update: false, index: 0, value: event?.color, view }),
               onPrimary: this.onChangeColor({ index: 0, value: app.bgColor, view }),
               onSecondary: this.onChangeColor({ index: 0, value: app.fgColor, view }),
             }),
             PickerColors({
-              id: 'MIXTURE_two',
+              id: 'GRADIENT_two',
               color: this.colors[1],
               onChangeColor: (event) => this.onChangeColor({ run: true, update: false, index: 1, value: event?.color, view }),
               onPrimary: this.onChangeColor({ index: 1, value: app.bgColor, view }),
               onSecondary: this.onChangeColor({ index: 1, value: app.fgColor, view }),
             }),
             Shades({
-              id: 'MIXTURE_result',
+              id: 'GRADIENT_result',
               colors: this.color as Color[],
             }),
             Slider({
-              id: 'MIXTURE_balance',
-              min: 0,
-              max: 100,
-              value: this.balance,
-              onchange: (event) => (this.balance = event?.value as number),
+              id: 'GRADIENT_balance',
+              min: 3,
+              max: 13,
+              value: this.length,
+              onchange: (event) => (this.length = event?.value as number),
             }),
             Button({
               id: 'MIXTURE_apply',
@@ -79,7 +78,7 @@ export class Mixtures extends AseComponent {
   onChangeColor({ view, index, value, run = false, update = true }: OnChangeColorProps) {
     const execution = () => {
       this.colors[index] = value;
-      if (update) view.update();
+      if (update) view.rebuild();
     };
     if (run) execution();
     return execution;
@@ -87,7 +86,7 @@ export class Mixtures extends AseComponent {
 
   updateColor({ view }: { view: AseView }) {
     if (this.colors.filter((color) => !!color).length === 2) {
-      this.color = [Transforms.blendColors(...(this.colors as [Color, Color]), this.balance)];
+      this.color = Transforms.gradientGenerator(...(this.colors as [Color, Color]), this.length);
       view.rebuild();
     }
   }

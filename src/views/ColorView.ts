@@ -1,12 +1,12 @@
 import { App, Separator } from 'juandac/ase-ui/components';
 import { AseComponent, AseView } from 'juandac/ase-ui/window';
-import { Contrast } from '../compoenets/contrast/Contrast';
-import { Gradients } from '../compoenets/gradients/Gradients';
-import { Harmonies } from '../compoenets/harmonies/Harmonies';
 import { Header } from '../compoenets/header/Header';
-import { Mixtures } from '../compoenets/mixtures/Mixtures';
+import { Contrast } from '../compoenets/smart/color/contrast/Contrast';
+import { Gradients } from '../compoenets/smart/color/gradients/Gradients';
+import { Harmonies } from '../compoenets/smart/color/harmonies/Harmonies';
+import { Mixtures } from '../compoenets/smart/color/mixtures/Mixtures';
 
-export class Color extends AseView {
+export class ColorView extends AseView {
   constructor() {
     super();
   }

@@ -1,8 +1,8 @@
 import { Transforms } from 'juandac/ase-color';
 import { Button, Check, Column, Component, Newrow, Shades, Slider } from 'juandac/ase-ui/components';
-import { ComponentFormart } from 'juandac/ase-ui/src/AseUI/components/interface';
+import { ComponentFormart } from 'juandac/ase-ui/components';
 import { AseComponent, AseView } from 'juandac/ase-ui/window';
-import { AseComponentMethodsProps } from 'juandac/ase-ui/src/AseUI/window/interface';
+import { AseComponentMethodsProps } from 'juandac/ase-ui/window';
 import { PickerColors } from '../pickerColors/PickerColors';
 import type { OnChangeColorProps } from './Mixtures.types';
 

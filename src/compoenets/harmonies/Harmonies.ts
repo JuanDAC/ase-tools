@@ -1,8 +1,7 @@
 import { HarmoniesColor } from 'juandac/ase-color/';
 import { Button, Check, Column, Combobox, Component, Newrow, Shades } from 'juandac/ase-ui/components';
-import { ComponentFormart, OnEvent } from 'juandac/ase-ui/src/AseUI/components/interface';
-import { AseComponent, AseView } from 'juandac/ase-ui/window';
-import { AseComponentMethodsProps } from 'juandac/ase-ui/src/AseUI/window/interface';
+import { ComponentFormart, OnEvent } from 'juandac/ase-ui/components';
+import { AseComponent, AseView, AseComponentMethodsProps } from 'juandac/ase-ui/window';
 import { PickerColors } from '../pickerColors/PickerColors';
 
 const harmonyHandlers = {

@@ -1,18 +1,30 @@
-import { ColorRGB } from 'juandac/ase-color/src/domain/color/types';
-import { ColorModels } from 'juandac/ase-color/src/main';
-import { JSON } from 'juandac/ase-json/src/main';
-import { Check, Column, Combobox, Component, Newrow, Shades } from 'juandac/ase-ui/src/AseUI/components';
-import { ComponentFormart } from 'juandac/ase-ui/src/AseUI/components/interface';
-import { AseComponent } from 'juandac/ase-ui/src/AseUI/window';
+import { HarmoniesColor } from 'juandac/ase-color/src/main';
+import { Button, Check, Column, Combobox, Component, Div, Newrow, Shades } from 'juandac/ase-ui/src/AseUI/components';
+import { ComponentFormart, OnEvent } from 'juandac/ase-ui/src/AseUI/components/interface';
+import { AseComponent, AseView } from 'juandac/ase-ui/src/AseUI/window';
 import { AseComponentMethodsProps } from 'juandac/ase-ui/src/AseUI/window/interface';
 import { PickerColors } from '../pickerColors/PickerColors';
+import { ContrastProps } from './Harmonies.types';
 
-export type SwapSection = ({ id }: { id: string }) => void;
-export type ContrastProps = {
-  swapSection: SwapSection;
+const harmonyHandlers = {
+  Analogos: (color: Color) => HarmoniesColor.analogs(color),
+  Complementarios: (color: Color) => HarmoniesColor.complementary(color),
+  'Complementarios cercanos': (color: Color) => HarmoniesColor.split_complementary(color),
+  Compuestos: (color: Color) => HarmoniesColor.compounds(color),
+  Cuadrados: (color: Color) => HarmoniesColor.squares(color),
+  'Dobles complementarios': (color: Color) => HarmoniesColor.complementary_doubles(color),
+  Monocromaticos: (color: Color) => HarmoniesColor.monochromaticos(color),
+  Tonos: (color: Color) => HarmoniesColor.tones(color),
+  Sombra: (color: Color) => HarmoniesColor.shades(color),
+  Triada: (color: Color) => HarmoniesColor.triad(color),
+  'Triada complementaria': (color: Color) => HarmoniesColor.complementary_triad(color),
 };
 
 export class Harmonies extends AseComponent {
+  color?: Color;
+  harmonyPalette: Color[] = [];
+  tryShow = false;
+  harmonySelected?: string;
   constructor() {
     super();
   }
@@ -25,7 +37,7 @@ export class Harmonies extends AseComponent {
     });
   }
 
-  render({ state, swapSection }: AseComponentMethodsProps & ContrastProps): ComponentFormart[] {
+  render({ state, view, swapSection }: AseComponentMethodsProps & ContrastProps): ComponentFormart[] {
     return Component({
       children: [
         Check({
@@ -39,45 +51,68 @@ export class Harmonies extends AseComponent {
           visible: state.obtain<boolean>({ id: 'COLOR_harmonies', key: 'visible' }),
           children: [
             PickerColors({
+              color: this.color,
               id: 'HARMONIES',
               state,
               onChangeColor: (event) => {
-                print(JSON.stringify(ColorModels.RGB2XYZ(event?.color as ColorRGB)));
+                this.color = event?.color;
               },
               onPrimary: () => {
-                print('onPrimary');
+                this.color = app.bgColor;
+                view.rebuild();
               },
               onSecondary: () => {
-                print('onSecondary');
+                this.color = app.fgColor;
+                view.rebuild();
               },
             }),
             Combobox({
               id: 'HARMONIES_select_harmony',
-              options: [
-                'Analogos',
-                'Complementarios',
-                'Complementarios cercanos',
-                'Compuestos',
-                'Cuadrados',
-                'Dobles complementarios',
-                'Monocromaticos',
-                'Tonos',
-                'Sombra',
-                'Triada',
-                'Triada complementaria',
-              ],
-              onchange: (event) => {
-                const { value } = event ?? {};
-                print('Generate the color palette new harmony ' + value);
-              },
+              option: this.harmonySelected,
+              options: ['Selecciona una', ...Object.keys(harmonyHandlers).sort()],
+              onchange: this.executeHarmony({ view }),
             }),
             Shades({
               id: 'HARMONIES_palette',
-              colors: [],
+              colors: this.harmonyPalette,
+            }),
+            /*
+            Div({
+              visible: (!this.harmonySelected && this.tryShow) || this.harmonySelected === 'Selecciona una',
+              children: [
+                Text({
+                  id: 'HARMONIES_warning_select_harmony',
+                  text: '⚠︎ | Ingrese una armonia cromatica |',
+                }),
+                Newrow(),
+              ],
+            }),
+            */
+            Button({
+              id: 'HARMONIES_apply',
+              visible: !!this.color && !!this.harmonySelected && this.harmonySelected !== 'Selecciona una',
+              text: 'Aplicar',
+              onclick: () => {
+                this.tryShow = !this.color || !this.harmonySelected;
+                view.rebuild();
+              },
             }),
           ],
         }),
       ],
     });
+  }
+
+  executeHarmony({ view }: { view: AseView }): OnEvent {
+    return (event) => {
+      const { value } = event ?? {};
+      this.harmonySelected = value as string;
+      if (this.color) {
+        const handler: (color: Color) => Color[] = harmonyHandlers[value as keyof typeof harmonyHandlers];
+        if (typeof handler === 'function') this.harmonyPalette = handler(this.color);
+        if (typeof handler !== 'function') this.harmonyPalette = [];
+        view.rebuild();
+      }
+    };
   }
 }

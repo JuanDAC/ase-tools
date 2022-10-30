@@ -5,6 +5,7 @@
     "lib": ["esnext"],
     "moduleResolution": "node",
     "strict": true,
+    "incremental": true,
     "types": ["dota-lua-types", "@types/node", "types-aseprite"],
     "resolveJsonModule": true,
     "plugins": [{ "transform": "dota-lua-types/transformer" }]

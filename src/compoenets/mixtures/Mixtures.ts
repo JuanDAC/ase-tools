@@ -1,13 +1,14 @@
 import { Transforms } from 'juandac/ase-color/src/main';
 import { Button, Check, Column, Component, Newrow, Shades, Slider } from 'juandac/ase-ui/src/AseUI/components';
 import { ComponentFormart } from 'juandac/ase-ui/src/AseUI/components/interface';
-import { AseComponent } from 'juandac/ase-ui/src/AseUI/window';
+import { AseComponent, AseView } from 'juandac/ase-ui/src/AseUI/window';
 import { AseComponentMethodsProps } from 'juandac/ase-ui/src/AseUI/window/interface';
 import { PickerColors } from '../pickerColors/PickerColors';
-import { ContrastProps } from './Mixtures.types';
+import { ContrastProps, OnChangeColorProps } from './Mixtures.types';
 
 export class Mixtures extends AseComponent {
   colors: [Color?, Color?] = [];
+  color: [Color?] = [];
   balance = 50;
   constructor() {
     super();
@@ -20,17 +21,9 @@ export class Mixtures extends AseComponent {
       initialValue: false,
       modify: false,
     });
-
-    state.initial<Color[]>({
-      id: 'MIXTURE_result',
-      key: 'colors',
-      initialValue: [],
-      modify: false,
-    });
   }
 
-  render({ state, window, swapSection }: AseComponentMethodsProps & ContrastProps): ComponentFormart[] {
-    print(this.balance);
+  render({ state, window, view, swapSection }: AseComponentMethodsProps & ContrastProps): ComponentFormart[] {
     return Component({
       children: [
         Check({
@@ -46,44 +39,33 @@ export class Mixtures extends AseComponent {
             PickerColors({
               id: 'MIXTURE_one',
               color: this.colors[0],
-              onChangeColor: (event) => {
-                this.colors[0] = event?.color;
-              },
-              onPrimary: () => {
-                print('onPrimary');
-              },
-              onSecondary: () => {
-                print('onSecondary');
-              },
+              onChangeColor: (event) => this.onChangeColor({ run: true, update: false, index: 0, value: event?.color, view }),
+              onPrimary: this.onChangeColor({ index: 0, value: app.bgColor, view }),
+              onSecondary: this.onChangeColor({ index: 0, value: app.fgColor, view }),
             }),
             PickerColors({
               id: 'MIXTURE_two',
               color: this.colors[1],
-              onChangeColor: (event) => {
-                this.colors[1] = event?.color;
-              },
-              onPrimary: (event) => {
-                print('onPrimary');
-              },
-              onSecondary: () => {
-                print('onSecondary');
-              },
+              onChangeColor: (event) => this.onChangeColor({ run: true, update: false, index: 1, value: event?.color, view }),
+              onPrimary: this.onChangeColor({ index: 1, value: app.bgColor, view }),
+              onSecondary: this.onChangeColor({ index: 1, value: app.fgColor, view }),
             }),
             Shades({
               id: 'MIXTURE_result',
-              colors: state.obtain<Color[]>({ id: 'MIXTURE_result', key: 'colors' }),
+              colors: this.color as Color[],
             }),
             Slider({
               id: 'MIXTURE_balance',
               min: 0,
               max: 100,
               value: this.balance,
-              onchange: () => (this.balance = window.state['MIXTURE_balance'] as number),
+              onchange: (event) => (this.balance = event?.value as number),
             }),
             Button({
               id: 'MIXTURE_apply',
+              visible: this.colors.filter((color) => !!color).length === 2,
               text: 'Aplicar',
-              onclick: () => this.updateColor({ state, window }),
+              onclick: () => this.updateColor({ view }),
             }),
           ],
         }),
@@ -91,13 +73,19 @@ export class Mixtures extends AseComponent {
     });
   }
 
-  updateColor({ state, window }: AseComponentMethodsProps) {
-    if (this.colors.length === 2) {
-      state.update<[Color]>({
-        id: 'MIXTURE_result',
-        key: 'colors',
-        update: () => [Transforms.blendColors(...(this.colors as [Color, Color]), window.state['MIXTURE_balance'])],
-      });
+  onChangeColor({ view, index, value, run = false, update = true }: OnChangeColorProps) {
+    const execution = () => {
+      this.colors[index] = value;
+      if (update) view.rebuild();
+    };
+    if (run) execution();
+    return execution;
+  }
+
+  updateColor({ view }: { view: AseView }) {
+    if (this.colors.filter((color) => !!color).length === 2) {
+      this.color = [Transforms.blendColors(...(this.colors as [Color, Color]), this.balance)];
+      view.rebuild();
     }
   }
 }

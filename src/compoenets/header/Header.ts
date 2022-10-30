@@ -1,7 +1,7 @@
-import { Button, Combobox, Separator, Component } from 'juandac/ase-ui/src/AseUI/components';
-import { ComponentFormart } from 'juandac/ase-ui/src/AseUI/components/interface';
-import { AseComponent } from 'juandac/ase-ui/src/AseUI/window';
-import { AseComponentMethodsProps } from 'juandac/ase-ui/src/AseUI/window/interface';
+import { Button, Combobox, Separator, Component } from 'juandac/ase-ui/components';
+import { ComponentFormart } from 'juandac/ase-ui/components';
+import { AseComponent } from 'juandac/ase-ui/window';
+import { AseComponentMethodsProps } from 'juandac/ase-ui/window';
 
 export class Header extends AseComponent {
   constructor() {

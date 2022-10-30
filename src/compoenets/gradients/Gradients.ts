@@ -1,7 +1,7 @@
-import { Transforms } from 'juandac/ase-color/src/main';
-import { Button, Check, Column, Component, Newrow, Shades, Slider } from 'juandac/ase-ui/src/AseUI/components';
+import { Transforms } from 'juandac/ase-color';
+import { Button, Check, Column, Component, Newrow, Shades, Slider } from 'juandac/ase-ui/components';
 import { ComponentFormart } from 'juandac/ase-ui/src/AseUI/components/interface';
-import { AseComponent, AseView } from 'juandac/ase-ui/src/AseUI/window';
+import { AseComponent, AseView } from 'juandac/ase-ui/window';
 import { AseComponentMethodsProps } from 'juandac/ase-ui/src/AseUI/window/interface';
 import { PickerColors } from '../pickerColors/PickerColors';
 import { ContrastProps, OnChangeColorProps } from './Gradients.types';
@@ -9,31 +9,37 @@ export class Gradients extends AseComponent {
   color: Color[] = [];
   colors: [Color?, Color?] = [];
   length = 3;
+  visible = false;
   constructor() {
     super();
   }
 
-  initialState({ state }: AseComponentMethodsProps): void {
+  initialState(): void {
+    /*
     state.initial<boolean>({
       id: 'COLOR_gradients',
       key: 'visible',
       initialValue: false,
       modify: false,
     });
+    */
   }
 
-  render({ state, view, swapSection }: AseComponentMethodsProps & ContrastProps): ComponentFormart[] {
+  render({ view }: AseComponentMethodsProps & ContrastProps): ComponentFormart[] {
     return Component({
       children: [
         Check({
           id: 'COLOR_degradado',
           text: 'Generar degradado',
-          selected: state.obtain<boolean>({ id: 'COLOR_gradients', key: 'visible' }),
-          onclick: () => swapSection({ id: 'COLOR_gradients' }),
+          selected: this.visible,
+          onclick: (event) => {
+            this.visible = !!event?.value;
+            view.update();
+          },
         }),
         Newrow(),
         Column({
-          visible: state.obtain<boolean>({ id: 'COLOR_gradients', key: 'visible' }),
+          visible: this.visible,
           children: [
             PickerColors({
               id: 'GRADIENT_one',

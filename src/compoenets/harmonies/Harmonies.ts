@@ -1,7 +1,7 @@
-import { HarmoniesColor } from 'juandac/ase-color/src/main';
-import { Button, Check, Column, Combobox, Component, Div, Newrow, Shades } from 'juandac/ase-ui/src/AseUI/components';
+import { HarmoniesColor } from 'juandac/ase-color/';
+import { Button, Check, Column, Combobox, Component, Newrow, Shades } from 'juandac/ase-ui/components';
 import { ComponentFormart, OnEvent } from 'juandac/ase-ui/src/AseUI/components/interface';
-import { AseComponent, AseView } from 'juandac/ase-ui/src/AseUI/window';
+import { AseComponent, AseView } from 'juandac/ase-ui/window';
 import { AseComponentMethodsProps } from 'juandac/ase-ui/src/AseUI/window/interface';
 import { PickerColors } from '../pickerColors/PickerColors';
 import { ContrastProps } from './Harmonies.types';
@@ -24,46 +24,49 @@ export class Harmonies extends AseComponent {
   color?: Color;
   harmonyPalette: Color[] = [];
   tryShow = false;
+  visible = false;
   harmonySelected?: string;
   constructor() {
     super();
   }
-  initialState({ state }: AseComponentMethodsProps): void {
-    state.initial<boolean>({
+  initialState(): void {
+    /*     state.initial<boolean>({
       id: 'COLOR_harmonies',
       key: 'visible',
       initialValue: false,
       modify: false,
-    });
+    }); */
   }
 
-  render({ state, view, swapSection }: AseComponentMethodsProps & ContrastProps): ComponentFormart[] {
+  render({ view }: AseComponentMethodsProps & ContrastProps): ComponentFormart[] {
     return Component({
       children: [
         Check({
           id: 'COLOR_armonias',
           text: 'Armonías cromáticas',
-          selected: state.obtain<boolean>({ id: 'COLOR_harmonies', key: 'visible' }),
-          onclick: () => swapSection({ id: 'COLOR_harmonies' }),
+          selected: this.visible,
+          onclick: (event) => {
+            this.visible = !!event?.value;
+            view.update();
+          },
         }),
         Newrow(),
         Column({
-          visible: state.obtain<boolean>({ id: 'COLOR_harmonies', key: 'visible' }),
+          visible: this.visible,
           children: [
             PickerColors({
               color: this.color,
               id: 'HARMONIES',
-              state,
               onChangeColor: (event) => {
                 this.color = event?.color;
               },
               onPrimary: () => {
                 this.color = app.bgColor;
-                view.rebuild();
+                view.update();
               },
               onSecondary: () => {
                 this.color = app.fgColor;
-                view.rebuild();
+                view.update();
               },
             }),
             Combobox({

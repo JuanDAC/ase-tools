@@ -1,4 +1,4 @@
-import { AseView } from "juandac/ase-ui/src/AseUI/window";
+import { AseView } from 'juandac/ase-ui/window';
 
 export type SwapSection = ({ id }: { id: string }) => void;
 export type ContrastProps = {

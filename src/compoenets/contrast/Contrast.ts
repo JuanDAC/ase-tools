@@ -1,8 +1,8 @@
-import { Transforms } from 'juandac/ase-color/src/main';
-import { Check, Component, Label, Newrow, Column, Button } from 'juandac/ase-ui/src/AseUI/components';
-import { ComponentFormart } from 'juandac/ase-ui/src/AseUI/components/interface';
-import { AseComponent, AseView } from 'juandac/ase-ui/src/AseUI/window';
-import { AseComponentMethodsProps } from 'juandac/ase-ui/src/AseUI/window/interface';
+import { Transforms } from 'juandac/ase-color';
+import { Check, Component, Label, Newrow, Column, Button } from 'juandac/ase-ui/components';
+import { ComponentFormart } from 'juandac/ase-ui/components';
+import { AseComponent, AseView } from 'juandac/ase-ui/window';
+import { AseComponentMethodsProps } from 'juandac/ase-ui/window';
 import { PickerColors } from '../pickerColors/PickerColors';
 import { ContrastProps, OnChangeColorProps } from './Contrast.types';
 
@@ -12,33 +12,40 @@ export class Contrast extends AseComponent {
   text = false;
   textBest = false;
   colorBlind = false;
+  visible = false;
   check = '√';
   unCheck = 'ⓧ';
+
   constructor() {
     super();
   }
 
-  initialState({ state }: AseComponentMethodsProps): void {
+  initialState(): void {
+    /*
     state.initial<boolean>({
       id: 'COLOR_contrasts',
       key: 'visible',
       initialValue: false,
       modify: false,
     });
+    */
   }
 
-  render({ state, view, swapSection }: AseComponentMethodsProps & ContrastProps): ComponentFormart[] {
+  render({ view }: AseComponentMethodsProps & ContrastProps): ComponentFormart[] {
     return Component({
       children: [
         Check({
           id: 'COLOR_contraste',
           text: 'Contraste idoneo',
-          selected: state.obtain<boolean>({ id: 'COLOR_contrasts', key: 'visible' }),
-          onclick: () => swapSection({ id: 'COLOR_contrasts' }),
+          selected: this.visible,
+          onclick: (event) => {
+            this.visible = !!event?.value;
+            view.update();
+          },
         }),
         Newrow(),
         Column({
-          visible: state.obtain<boolean>({ id: 'COLOR_contrasts', key: 'visible' }),
+          visible: this.visible,
           children: [
             PickerColors({
               id: 'CONTRAST_one',
@@ -62,17 +69,17 @@ export class Contrast extends AseComponent {
             Newrow(),
             Label({
               id: 'CONTRAST_text',
-              text: `Contraste para textos: ${this.text ? this.check : this.unCheck}`,
+              text: `Contraste para textos: ${this.obtainCheck(this.text)}`,
             }),
             Newrow(),
             Label({
               id: 'CONTRAST_high',
-              text: `Alto contraste ${this.textBest ? this.check : this.unCheck}`,
+              text: `Alto contraste ${this.obtainCheck(this.textBest)}`,
             }),
             Newrow(),
             Label({
               id: 'CONTRAST_high',
-              text: `Contraste mejorado ${this.colorBlind ? this.check : this.unCheck}`,
+              text: `Contraste mejorado ${this.obtainCheck(this.colorBlind)}`,
             }),
             Newrow(),
             Button({
@@ -85,6 +92,10 @@ export class Contrast extends AseComponent {
         }),
       ],
     });
+  }
+
+  obtainCheck(value: boolean): string {
+    return value ? this.check : this.unCheck;
   }
 
   onChangeColor({ view, index, value, run = false, update = true }: OnChangeColorProps) {

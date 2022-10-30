@@ -1,4 +1,4 @@
-import type { AseView } from 'juandac/ase-ui/src/AseUI/window';
+import type { AseView } from 'juandac/ase-ui/window';
 
 export type SwapSection = ({ id }: { id: string }) => void;
 export type OnChangeColorProps = {

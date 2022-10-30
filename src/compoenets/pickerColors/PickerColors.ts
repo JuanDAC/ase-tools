@@ -1,5 +1,5 @@
-import { Button, Color, Component, FC, Row } from 'juandac/ase-ui/src/AseUI/components';
-import { OnEvent } from 'juandac/ase-ui/src/AseUI/components/interface';
+import { Button, Color, Component, FC, Row } from 'juandac/ase-ui/components';
+import { OnEvent } from 'juandac/ase-ui/components';
 
 type PickerColorsProps = {
   id: string;

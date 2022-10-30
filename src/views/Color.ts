@@ -1,5 +1,5 @@
-import { App, Separator } from 'juandac/ase-ui/src/AseUI/components';
-import { AseComponent, AseView } from 'juandac/ase-ui/src/AseUI/window';
+import { App, Separator } from 'juandac/ase-ui/components';
+import { AseComponent, AseView } from 'juandac/ase-ui/window';
 import { Contrast } from '../compoenets/contrast/Contrast';
 import { Gradients } from '../compoenets/gradients/Gradients';
 import { Harmonies } from '../compoenets/harmonies/Harmonies';

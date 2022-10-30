@@ -14,16 +14,8 @@ export class Gradients extends AseComponent {
     super();
   }
 
-  initialState(): void {
-    /*
-    state.initial<boolean>({
-      id: 'COLOR_gradients',
-      key: 'visible',
-      initialValue: false,
-      modify: false,
-    });
-    */
-  }
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  initialState(): void {}
 
   render({ view }: AseComponentMethodsProps & ContrastProps): ComponentFormart[] {
     return Component({

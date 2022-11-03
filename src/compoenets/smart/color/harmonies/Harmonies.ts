@@ -1,6 +1,7 @@
 import { HarmoniesColor } from 'juandac/ase-color/';
-import { Button, Check, Column, Combobox, Component, Newrow, Shades } from 'juandac/ase-ui/components';
+import { Check, Column, Combobox, Component, Div, Newrow, Shades } from 'juandac/ase-ui/components';
 import { ComponentFormart, OnEvent } from 'juandac/ase-ui/components';
+import { Text } from 'juandac/ase-ui/src/AseUI/components/label';
 import { AseComponent, AseView, AseComponentMethodsProps } from 'juandac/ase-ui/window';
 import { PickerColors } from '../../../fools/pickerColors/PickerColors';
 import type { HarmoniesProps } from './Harmonies.types';
@@ -23,7 +24,6 @@ export class Harmonies extends AseComponent {
   color?: Color;
   harmonyPalette: Color[] = [];
   tryShow = false;
-  visible = false;
   harmonySelected?: string;
   constructor() {
     super();
@@ -77,26 +77,15 @@ export class Harmonies extends AseComponent {
               id: 'HARMONIES_palette',
               colors: this.harmonyPalette,
             }),
-            /*
             Div({
-              visible: (!this.harmonySelected && this.tryShow) || this.harmonySelected === 'Selecciona una',
+              visible: !this.color && this.harmonySelected !== 'Selecciona una',
               children: [
                 Text({
-                  id: 'HARMONIES_warning_select_harmony',
-                  text: '⚠︎ | Ingrese una armonia cromatica |',
+                  id: 'HARMONIES_warning_select_color',
+                  text: '⚠︎ | Escoja un color |',
                 }),
                 Newrow(),
               ],
-            }),
-            */
-            Button({
-              id: 'HARMONIES_apply',
-              visible: !!this.color && !!this.harmonySelected && this.harmonySelected !== 'Selecciona una',
-              text: 'Aplicar',
-              onclick: () => {
-                this.tryShow = !this.color || !this.harmonySelected;
-                view.rebuild();
-              },
             }),
           ],
         }),
@@ -112,7 +101,7 @@ export class Harmonies extends AseComponent {
         const handler: (color: Color) => Color[] = harmonyHandlers[value as keyof typeof harmonyHandlers];
         if (typeof handler === 'function') this.harmonyPalette = handler(this.color);
         if (typeof handler !== 'function') this.harmonyPalette = [];
-        view.rebuild();
+        view.update();
       }
     };
   }

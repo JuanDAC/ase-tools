@@ -110,7 +110,6 @@ export class Contrast extends AseComponent {
       this.text = text;
       this.textBest = textBest;
       this.colorBlind = colorBlind;
-
       view.rebuild();
     }
   }

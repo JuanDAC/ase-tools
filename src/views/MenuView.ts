@@ -2,6 +2,7 @@ import { App, Button, Newrow, Separator } from 'juandac/ase-ui/components';
 import { AseComponent, AseView } from 'juandac/ase-ui/window';
 import { Header } from '../compoenets/header/Header';
 import { ColorView } from './ColorView';
+import { FiltersView } from './FiltersView';
 
 export class MenuView extends AseView {
   constructor() {
@@ -45,6 +46,7 @@ export class MenuView extends AseView {
         Button({
           id: 'MENU_utilities',
           text: 'Filtros',
+          onclick: () => new FiltersView(),
         }),
         Newrow(),
         Button({
